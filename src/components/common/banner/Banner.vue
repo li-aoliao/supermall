@@ -1,69 +1,55 @@
 <template>
-  <swiper :options="swiperOptions" class="swiper">
-    <swiper-slide v-for="value in banner" class="swiper-item">
-      <img :src="value.image" alt="">
+  <swiper ref="mySwiper" :options="swiperOptions" class="swiper">
+    <swiper-slide
+      v-for="(value, index) in banner"
+      class="swiper-item"
+      :key="index"
+    >
+      <img :src="value.image" alt="" />
     </swiper-slide>
     <div class="swiper-pagination" slot="pagination"></div>
-    <div class="swiper-pagination"></div>
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
   </swiper>
 </template>
 
 <script>
-  import {
+import { Swiper, SwiperSlide } from "vue-awesome-swiper";
+import "swiper/swiper-bundle.css";
+export default {
+  name: "Banner",
+  components: {
     Swiper,
-    SwiperSlide
-  } from 'vue-awesome-swiper'
-  import 'swiper/swiper-bundle.css'
-  export default {
-    name: 'Banner',
-    components: {
-      Swiper,
-      SwiperSlide
+    SwiperSlide,
+  },
+  props: {
+    banner: {
+      type: Array,
     },
-    props: {
-      banner: {
-        type: Object
-      }
-    },
-    data() {
-      return {
-        list: null,
-        swiperOptions: {
-          autoplay: true,
-          loop: true,
-          pagination: {
-            el: '.swiper-pagination'
-          },
-          navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-          },
-        }
-      };
-    },
-    computed: {
-      swiper() {
-        return this.$refs.mySwiper.$swiper
-      }
-    },
-    created() {
-
-    },
-    mounted() {
-      
-    },
-    methods: {
-    },
-  };
+  },
+  data() {
+    return {
+      swiperOptions: {
+        autoplay: true,
+        loop: true,
+        pagination: {
+          el: ".swiper-pagination",
+          dynamicBullets: true,
+        },
+        effect: "cube",
+      },
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-  .swiper-item{
-    img{
+.swiper {
+  .swiper-item {
+    img {
       width: 100%;
       height: 300px;
     }
   }
+  .swiper-pagination {
+  }
+}
 </style>
