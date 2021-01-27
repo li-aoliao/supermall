@@ -1,51 +1,55 @@
 <template>
-  <swiper ref="mySwiper" :options="swiperOptions" class="swiper">
-    <swiper-slide v-for="(value, index) in banner" class="swiper-item" :key="index">
-      <img :src="value.image" alt="" />
-    </swiper-slide>
-    <div class="swiper-pagination" slot="pagination"></div>
-  </swiper>
+  <div class="banner">
+    <swiper ref="mySwiper" :options="swiperOptions">
+      <swiper-slide v-for="(value, index) in banner" :key="index">
+        <img :src="value.image" alt="" />
+      </swiper-slide>
+      <div class="swiper-pagination" slot="pagination"></div>
+    </swiper>
+  </div>
 </template>
 
 <script>
-import { Swiper, SwiperSlide } from "vue-awesome-swiper";
-import "swiper/swiper-bundle.css";
-export default {
-  name: 'carrousel',
-  components: {
+  import 'swiper/swiper-bundle.css';
+  import {
     Swiper,
-    SwiperSlide,
-  },
-  props: {
-    banner: {
-      type: Array,
+    SwiperSlide
+  } from "vue-awesome-swiper";
+  import SwiperCore, {
+    Autoplay,
+    Pagination
+  } from 'swiper';
+  SwiperCore.use([Autoplay,Pagination]);
+  export default {
+    name: 'carrousel',
+    components: {
+      Swiper,
+      SwiperSlide,
     },
-  },
-  data() {
-    return {
-      swiperOptions: {
-        autoplay: true,
-        loop: true,
-        pagination: {
-          el: ".swiper-pagination",
-          dynamicBullets: true,
-        },
-        effect: "cube",
+    props: {
+      banner: {
+        type: Array,
       },
-    };
-  },
-};
+    },
+    data() {
+      return {
+        swiperOptions: {
+          loop: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true
+          },
+          autoplay: true,
+          effect: 'coverflow'
+        }
+      }
+    },
+  };
 </script>
 
 <style lang="scss" scoped>
-.swiper {
-  .swiper-item {
-    img {
-      width: 100%;
-      height: 200px;
-    }
+  img {
+    width: 100%;
+    height: 200px;
   }
-  .swiper-pagination {
-  }
-}
 </style>

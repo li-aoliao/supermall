@@ -5,79 +5,23 @@
         购物街
       </template>
     </nav-bar>
-    <banner :banner="banner"/>
+    <banner :banner="banner" />
     <home-recommend-view :recommend="recommend" />
     <home-feature-view />
-    <tab-control :title="title" />
-    <div>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-    </div>
+    <tab-control :title="title" @typeTrans="typeTrans" />
+    <goods-list :goodsList="goods[currentType].list" />
   </div>
 </template>
 
 <script>
-  import NavBar from 'components/common/navbar/NavBar.vue';
-  import Banner from 'components/common/banner/Banner.vue';
+  import NavBar from 'components/common/navbar/NavBar.vue'
+  import Banner from 'components/common/banner/Banner.vue'
   import TabControl from 'components/content/tabControl/TabControl.vue'
-  import {getHomeMultidata} from 'network/home';
+  import GoodsList from 'components/content/Goods/GoodsList.vue'
+  import {
+    getHomeMultidata,
+    getHomeGoods
+  } from 'network/home'
   import HomeRecommendView from 'views/home/childComps/HomeRecommendView.vue'
   import HomeFeatureView from 'views/home/childComps/HomeFeatureView.vue'
   export default {
@@ -87,37 +31,74 @@
       Banner,
       HomeRecommendView,
       HomeFeatureView,
-      TabControl
+      TabControl,
+      GoodsList
     },
     data() {
       return {
         banner: [],
-        dKeyword: [],
-        keywords: [],
         recommend: [],
-        title: ['流行','新款','精选']
+        title: ['流行', '新款', '精选'],
+        goods: {
+          pop: {
+            page: 0,
+            list: []
+          },
+          new: {
+            page: 0,
+            list: []
+          },
+          sell: {
+            page: 0,
+            list: []
+          }
+        },
+        currentType: 'pop',
       };
     },
     created() {
-      getHomeMultidata().then(res => {
-        console.log(res.data.data.recommend.list);
-        this.banner = res.data.data.banner.list;
-        this.dKeyword = res.data.data.dKeyword;
-        this.keywords = res.data.data.keywords;
-        this.recommend = res.data.data.recommend.list;
-      })
+      this.getHomeMultidata();
+      this.getHomeGoods('pop');
+      this.getHomeGoods('new');
+      this.getHomeGoods('sell');
     },
     methods: {
-
+      getHomeMultidata() {
+        getHomeMultidata().then(res => {
+          this.banner = res.data.data.banner.list;
+          this.recommend = res.data.data.recommend.list;
+        })
+      },
+      getHomeGoods(type) {
+        const page = this.goods[type].page + 1;
+        getHomeGoods(type, page).then(res => {
+          this.goods[type].list.push(...res.data.data.list);
+          this.goods[type].page = page;
+        })
+      },
+      typeTrans(index) {
+        switch (index) {
+          case 0:
+            this.currentType = 'pop';
+            break
+          case 1:
+            this.currentType = 'new';
+            break
+          case 2:
+            this.currentType = 'sell';
+            break
+        }
+      }
     },
   };
 </script>
 
 <style lang="scss" scoped>
-  #home{
+  #home {
     padding-top: 44px;
   }
-  .home-nav{
+
+  .home-nav {
     background-color: var(--color-tint);
     color: #fff;
     position: fixed;
