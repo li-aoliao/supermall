@@ -1,10 +1,6 @@
 <template>
   <swiper ref="mySwiper" :options="swiperOptions" class="swiper">
-    <swiper-slide
-      v-for="(value, index) in banner"
-      class="swiper-item"
-      :key="index"
-    >
+    <swiper-slide v-for="(value, index) in banner" class="swiper-item" :key="index">
       <img :src="value.image" alt="" />
     </swiper-slide>
     <div class="swiper-pagination" slot="pagination"></div>
@@ -15,7 +11,7 @@
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/swiper-bundle.css";
 export default {
-  name: "Banner",
+  name: 'carrousel',
   components: {
     Swiper,
     SwiperSlide,
@@ -46,7 +42,7 @@ export default {
   .swiper-item {
     img {
       width: 100%;
-      height: 300px;
+      height: 200px;
     }
   }
   .swiper-pagination {
