@@ -10,46 +10,53 @@
 </template>
 
 <script>
-  import 'swiper/swiper-bundle.css';
-  import {
+import "swiper/swiper-bundle.css";
+import { Swiper, SwiperSlide } from "vue-awesome-swiper";
+import SwiperCore, {
+  SwiperClass,
+  Pagination,
+  Mousewheel,
+  Autoplay,
+  Navigation,
+  EffectFade,
+  EffectCoverflow,
+} from "swiper";
+SwiperCore.use([Autoplay, Pagination, EffectFade, EffectCoverflow]);
+export default {
+  name: "carrousel",
+  components: {
     Swiper,
-    SwiperSlide
-  } from "vue-awesome-swiper";
-  import SwiperCore, {
-    Autoplay,
-    Pagination
-  } from 'swiper';
-  SwiperCore.use([Autoplay,Pagination]);
-  export default {
-    name: 'carrousel',
-    components: {
-      Swiper,
-      SwiperSlide,
+    SwiperSlide,
+  },
+  props: {
+    banner: {
+      type: Array,
     },
-    props: {
-      banner: {
-        type: Array,
+  },
+  data() {
+    return {
+      swiperOptions: {
+        loop: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        autoplay: true,
+        effect: "coverflow",
       },
-    },
-    data() {
-      return {
-        swiperOptions: {
-          loop: true,
-          pagination: {
-            el: '.swiper-pagination',
-            clickable: true
-          },
-          autoplay: true,
-          effect: 'coverflow'
-        }
-      }
-    },
-  };
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
+.banner /deep/ .swiper-container {
   img {
     width: 100%;
     height: 200px;
   }
+  .swiper-pagination-bullet-active {
+    background-color: #f40;
+  }
+}
 </style>
