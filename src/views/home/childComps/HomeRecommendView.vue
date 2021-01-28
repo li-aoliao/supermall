@@ -13,24 +13,10 @@
 <script>
 export default {
   name: 'HomeRecommendView',
-  components: {
-
-  },
   props: {
     recommend: {
       type: Array
     }
-  },
-  data() {
-    return {
-      
-    };
-  },
-  mounted() {
-    
-  },
-  methods: {
-    
   },
 };
 </script>

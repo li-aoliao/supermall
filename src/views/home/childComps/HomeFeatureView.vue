@@ -9,18 +9,6 @@
 <script>
 export default {
   name: 'HomeFeatureView',
-  components: {},
-  data() {
-    return {
-      
-    };
-  },
-  mounted() {
-    
-  },
-  methods: {
-    
-  },
 };
 </script>
 

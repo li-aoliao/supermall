@@ -42,8 +42,6 @@ export default {
     line-height: 44px;
     background-color: #fff;
     font-size: 15px;
-    position: sticky;
-    top: 44px;
     .tab-control-item{
       flex: 1;
       span{
