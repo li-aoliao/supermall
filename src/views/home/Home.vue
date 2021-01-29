@@ -5,11 +5,12 @@
         购物街
       </template>
     </nav-bar>
+    <tab-control :title="title" @typeTrans="typeTrans" ref="tabctrl1" v-show="tabFixed"/>
     <bscroll class="box" ref="scroll" :probeType="3" @scrollPosition="scrollPosition" :pullUpLoad="true" @refresh="refresh">
-      <banner :banner="banner" />
+      <banner :banner="banner" @imgLoad="imgLoad"/>
       <home-recommend-view :recommend="recommend" />
       <home-feature-view />
-      <tab-control :title="title" @typeTrans="typeTrans" ref="tabctrl"/>
+      <tab-control :title="title" @typeTrans="typeTrans" ref="tabctrl2"/>
       <goods-list :goodsList="goods[currentType].list" />
     </bscroll>
     <top-back @click.native="topBack" v-show="isActive"></top-back>
@@ -64,6 +65,9 @@
         },
         currentType: 'pop',
         isActive: false,
+        tabOffsetTop: 0,
+        tabFixed: false,
+        saveY: 0
       };
     },
     created() {
@@ -99,32 +103,40 @@
             this.currentType = 'sell';
             break
         }
+        this.$refs.tabctrl1.currentIndex = index;
+        this.$refs.tabctrl2.currentIndex = index;
       },
       topBack() {
         this.$refs.scroll.scroll.scrollTo(0, 0, 500)
       },
       scrollPosition(position) {
-        this.isActive = position.y < -1000
+        this.isActive = position.y < -1000;
+        this.tabFixed = -position.y > this.tabOffsetTop
       },
       refresh() {
         this.getHomeGoods(this.currentType);
-      }
+      },
+      imgLoad() {
+        this.tabOffsetTop = this.$refs.tabctrl2.$el.offsetTop;
+      },
+      activated() {
+        this.$refs.scroll.scroll.scrollTo(0,this.saveY,0);
+      },
+      deactivated() {
+        this.saveY = this.$refs.scroll.scroll.getScrollY();
+      },
     },
   };
 </script>
 
 <style lang="scss" scoped>
   #home {
-    padding-top: 44px;
     height: 100vh;
   }
 
   .home-nav {
     background-color: var(--color-tint);
     color: #fff;
-    position: fixed;
-    top: 0;
-    z-index: 9;
   }
 
   .box {

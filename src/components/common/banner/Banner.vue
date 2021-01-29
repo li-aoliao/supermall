@@ -2,7 +2,7 @@
   <div class="banner">
     <swiper ref="mySwiper" :options="swiperOptions">
       <swiper-slide v-for="(value, index) in banner" :key="index">
-        <img :src="value.image" alt="" />
+        <img :src="value.image" alt="" @load="imgLoad"/>
       </swiper-slide>
       <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
@@ -44,8 +44,17 @@ export default {
         autoplay: true,
         effect: "coverflow",
       },
+      imgLoaded: true
     };
   },
+  methods: {
+    imgLoad() {
+      if(this.imgLoaded){
+        this.$emit('imgLoad');
+        this.imgLoaded = false
+      }
+    }
+  }
 };
 </script>
 

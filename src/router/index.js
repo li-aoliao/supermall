@@ -2,10 +2,14 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from 'views/home/Home.vue'
 
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
 Vue.use(VueRouter)
 
-const routes = [
-  {
+const routes = [{
     path: '/',
     redirect: '/home'
   },
@@ -29,10 +33,15 @@ const routes = [
     name: 'Profile',
     component: () => import('views/profile/Profile.vue')
   },
+  {
+    path: '/detail',
+    name: 'Detail',
+    component: () => import('views/detail/Detail.vue')
+  }
 ]
 
 const router = new VueRouter({
-  // mode: 'history',
+  mode: 'history',
   routes
 })
 

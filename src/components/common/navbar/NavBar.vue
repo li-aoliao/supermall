@@ -9,20 +9,6 @@
 <script>
 export default {
   name: 'NavBar',
-  components: {
-
-  },
-  data() {
-    return {
-      
-    };
-  },
-  mounted() {
-    
-  },
-  methods: {
-    
-  },
 };
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="goods-list-item">
+  <div class="goods-list-item" @click="itemClick">
     <img :src="goodsItem.show.img" alt="">
     <p>{{goodsItem.title}}</p>
     <div><span>￥{{goodsItem.price}}</span><span>收藏：{{goodsItem.cfav}}</span></div>
@@ -9,6 +9,11 @@
 <script>
 export default {
   name: 'GoodsListItem',
+  data() {
+    return {
+
+    }
+  },
   props: {
     goodsItem: {
       type: Object,
@@ -17,14 +22,16 @@ export default {
       }
     }
   },
-  data() {
-    return {
-      
-    };
-  },
   methods: {
-    
-  },
+    itemClick() {
+      this.$router.push({
+        path: 'detail',
+        query: {
+          iid: this.goodsItem.iid
+        }
+      })
+    }
+  }
 };
 </script>
 
