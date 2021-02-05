@@ -163,14 +163,29 @@ export default {
     scrollPosition(position) {
       let scrollY = -this.$refs.scroll.scroll.y;
       if(scrollY >= 0 && scrollY < this.$refs.param.$el.offsetTop){
-        this.currentIndex = 0
-      }else if((scrollY >= this.$refs.param.$el.offsetTop && scrollY < this.$refs.rate.$el.offsetTop) || (scrollY >= this.$refs.param.$el.offsetTop && scrollY < this.$refs.goods.$el.offsetTop)){
-        this.currentIndex = 1
-      }else if(scrollY >= this.$refs.rate.$el.offsetTop && scrollY < this.$refs.goods.$el.offsetTop){
-        this.currentIndex = 2
+        this.currentIndex = 0 
+      }else if(this.$refs.rate.$el.offsetTop){
+        if(scrollY >= this.$refs.param.$el.offsetTop && scrollY < this.$refs.rate.$el.offsetTop){
+          this.currentIndex = 1
+        }else if(scrollY >= this.$refs.rate.$el.offsetTop && scrollY < this.$refs.goods.$el.offsetTop){
+          this.currentIndex = 2
+        }else{
+          this.currentIndex = 3
+        }
       }else{
-        this.currentIndex = 3
+        if(scrollY >= this.$refs.param.$el.offsetTop && scrollY < this.$refs.goods.$el.offsetTop){
+          this.currentIndex = 1
+        }else{
+          this.currentIndex = 3
+        }
       }
+      // else if((scrollY >= this.$refs.param.$el.offsetTop && scrollY < this.$refs.rate.$el.offsetTop) || (scrollY >= this.$refs.param.$el.offsetTop && scrollY < this.$refs.goods.$el.offsetTop)){
+      //   this.currentIndex = 1
+      // }else if(scrollY >= this.$refs.rate.$el.offsetTop && scrollY < this.$refs.goods.$el.offsetTop){
+      //   this.currentIndex = 2
+      // }else{
+      //   this.currentIndex = 3
+      // }
     },
   },
 };
