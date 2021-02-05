@@ -143,5 +143,6 @@
     width: 100%;
     height: calc(100vh - 93px);
     overflow: hidden;
+    position: relative;
   }
 </style>

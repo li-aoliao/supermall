@@ -1,6 +1,6 @@
 <template>
   <div class="goods-list-item" @click="itemClick">
-    <img :src="goodsItem.show.img" alt="">
+    <img :src="showImg" alt="">
     <p>{{goodsItem.title}}</p>
     <div><span>￥{{goodsItem.price}}</span><span>收藏：{{goodsItem.cfav}}</span></div>
   </div>
@@ -9,17 +9,17 @@
 <script>
 export default {
   name: 'GoodsListItem',
-  data() {
-    return {
-
-    }
-  },
   props: {
     goodsItem: {
       type: Object,
       default() {
         return {}
       }
+    }
+  },
+  computed: {
+    showImg() {
+      return this.goodsItem.image || this.goodsItem.show.img
     }
   },
   methods: {

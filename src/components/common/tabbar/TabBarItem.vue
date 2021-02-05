@@ -9,9 +9,6 @@
 <script>
   export default {
     name: 'TabBarItem',
-    components: {
-
-    },
     props: {
       path: {
         type: String,
@@ -21,11 +18,6 @@
         type: String,
         default: 'red'
       }
-    },
-    data() {
-      return {
-        
-      };
     },
     computed: {
       isActive() {
